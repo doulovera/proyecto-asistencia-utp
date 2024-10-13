@@ -2,7 +2,10 @@ package servlets;
 
 import dao.HorariosDao;
 import dao.HorariosDaoImpl;
+import dao.UsuarioDao;
+import dao.UsuarioDaoImpl;
 import models.Horarios;
+import models.Usuarios;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,56 +13,69 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @WebServlet("/horarios")
 public class HorariosServlet extends HttpServlet {
     private HorariosDao horariosDao;
+    private UsuarioDao usuarioDao;
 
     @Override
     public void init() throws ServletException {
-        horariosDao = new HorariosDaoImpl();  // Inicializamos el DAO
+        horariosDao = new HorariosDaoImpl();
+        usuarioDao = new UsuarioDaoImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("list")) {
-            // Listar los horarios de asistencia
-            List<Horarios> horariosList = horariosDao.readAll();
-            request.setAttribute("horariosList", horariosList);
-            request.getRequestDispatcher("horarios.jsp").forward(request, response);
-        }
+        // Redirigir a la página JSP que contiene el formulario de horarios
+        request.getRequestDispatcher("/WEB-INF/views/registroHorario.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String identificador = request.getParameter("identificador");
-        Date fechaActual = new Date();  // Obtener la fecha actual
-
-        // Buscar si el usuario ya tiene un registro de entrada para la fecha actual
-        Horarios horario = horariosDao.buscarPorIdentificadorYFecha(identificador, new java.sql.Date(fechaActual.getTime()));
-
-        if (horario == null) {
-            // Si no hay registro de entrada, registrar la hora de entrada
-            Horarios nuevoHorario = new Horarios();
-            nuevoHorario.setId(Integer.parseInt(request.getParameter("usuarioID")));
-            nuevoHorario.setFecha(new java.sql.Date(fechaActual.getTime()));  // Fecha actual
-            nuevoHorario.setHoraIngreso(new Time(fechaActual.getTime()));  // Hora de entrada actual
-
-            horariosDao.create(nuevoHorario);
-            response.getWriter().write("Hora de entrada registrada exitosamente.");
-        } else if (horario.getHoraSalida() == null) {
-            // Si ya se registró la hora de entrada pero no la salida, registrar la hora de salida
-            horario.setHoraSalida(new Time(fechaActual.getTime()));  // Hora de salida actual
-            horariosDao.update(horario);
-            response.getWriter().write("Hora de salida registrada exitosamente.");
-        } else {
-            // Si ya se registró tanto la entrada como la salida
-            response.getWriter().write("Ya se ha registrado tanto la entrada como la salida.");
+        if (identificador == null || identificador.isEmpty()) {
+            request.setAttribute("mensaje", "El identificador no puede estar vacío.");
+            request.getRequestDispatcher("/WEB-INF/views/registroHorario.jsp").forward(request, response);
+            return;
         }
+
+        Usuarios usuario = usuarioDao.buscarPorIdentificador(identificador);  // Método que debe estar en UsuarioDao
+        if (usuario == null) {
+            request.setAttribute("mensaje", "No se encontró ningún usuario con el identificador: " + identificador);
+            request.getRequestDispatcher("/WEB-INF/views/registroHorario.jsp").forward(request, response);
+            return;
+        }
+
+        LocalDate fechaActual = LocalDate.now();
+        LocalTime horaActual = LocalTime.now();
+
+        Horarios horarioHoy = horariosDao.buscarPorIdentificadorYFecha(usuario.getIdentificador(), Date.valueOf(fechaActual));
+
+        if (horarioHoy != null) {
+            if (horarioHoy.getHoraSalida() == null) {
+                // Registrar salida
+                horarioHoy.setHoraSalida(Time.valueOf(horaActual));
+                horariosDao.update(horarioHoy);
+                request.setAttribute("mensaje", usuario.getNombres() + " " + usuario.getApellidos() + " - Hora de salida registrada: " + horaActual);
+            } else {
+                request.setAttribute("mensaje", "Ya se ha registrado la hora de salida para hoy.");
+            }
+        } else {
+            // Registrar ingreso
+            Horarios nuevoHorario = new Horarios();
+            nuevoHorario.setUsuarioId(usuario.getId());
+            nuevoHorario.setFecha(Date.valueOf(fechaActual));
+            nuevoHorario.setHoraIngreso(Time.valueOf(horaActual));
+            horariosDao.create(nuevoHorario);
+            request.setAttribute("mensaje", usuario.getNombres() + " " + usuario.getApellidos() + " - Hora de ingreso registrada: " + horaActual);
+        }
+
+        // Redirigir de nuevo al JSP con el mensaje
+        request.getRequestDispatcher("/WEB-INF/views/registroHorario.jsp").forward(request, response);
     }
 }

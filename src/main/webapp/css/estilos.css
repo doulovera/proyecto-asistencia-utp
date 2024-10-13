@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+    /* Colores */
+    --color-fondo: #f4f4f4; /* Color de fondo */
+    --color-primario: #007bff; /* Azul primario */
+    --color-secundario: #0056b3; /* Azul oscuro para hover */
+    --color-texto: #333; /* Color del texto principal */
+    --color-texto-secundario: #555; /* Color del texto secundario */
+    --color-borde: #ccc; /* Color del borde */
+    --color-hover-borde: var(--color-primario); /* Borde en foco */
+    --color-sombra: rgba(0, 0, 0, 0.1); /* Sombra suave */
+    --color-hover-sombra: rgba(0, 123, 255, 0.2); /* Sombra en foco */
+    --color-brillo: rgba(255, 255, 255, 0.2); /* Brillo para el botón */
+    --color-brillo-hover: rgba(255, 255, 255, 0.4); /* Brillo al pasar el mouse */
+
+    /* Fuentes */
+    --fuente-principal: 'Montserrat', sans-serif; /* Fuente principal */
+    --fuente-secundaria: 'Krona One', sans-serif; /* Fuente secundaria */
+
+    /* Espaciados */
+    --spacing-small: 10px; /* Espaciado pequeño */
+    --spacing-medium: 20px; /* Espaciado medio */
+    --spacing-large: 40px; /* Espaciado grande */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--fuente-principal);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--color-fondo);
+}
+
+.form-container {
+    background-color: #fff;
+    padding: var(--spacing-large);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--color-sombra);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-medium);
+    color: var(--color-texto);
+    font-family: var(--fuente-secundaria); /* Aplicar fuente secundaria */
+}
+
+.form label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+    margin-bottom: var(--spacing-small);
+}
+
+.form input[type="text"],
+.form input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--color-texto);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Agregar transición */
+}
+
+.form input[type="text"]:focus,
+.form input[type="number"]:focus {
+    border-color: var(--color-hover-borde);
+    outline: none;
+    box-shadow: 0 0 5px var(--color-hover-sombra);
+}
+
+.form input[type="text"]:hover,
+.form input[type="number"]:hover {
+    border-color: var(--color-primario); /* Cambia el color del borde al pasar el mouse */
+    box-shadow: 0 0 5px var(--color-brillo-hover); /* Agrega un efecto de brillo */
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--color-primario);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición para el brillo */
+    box-shadow: 0 2px 5px var(--color-sombra); /* Sombra por defecto para el botón */
+}
+
+.btn:hover {
+    background-color: var(--color-secundario);
+    box-shadow: 0 0 10px var(--color-brillo); /* Efecto de brillo al pasar el mouse */
+}
+
+.btn:focus {
+    outline: none; /* Quitar el contorno por defecto al enfocar */
+    box-shadow: 0 0 10px var(--color-hover-sombra); /* Sombra al enfocar */
+}
+
+
+
+
+
+
+html, body {
+    height: 100%; /* Hacer que el html y el body ocupen toda la altura */
+    margin: 0; /* Eliminar el margen por defecto */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Organizar elementos en columnas */
+    justify-content: space-between; /* Espacio entre el contenido y el footer */
+    align-items: center; /* Centrar el contenido horizontalmente */
+    height: 100vh; /* Hacer que el body ocupe toda la altura de la ventana */
+    background-color: var(--color-fondo); /* Color de fondo */
+}
+
+.form-container {
+    background-color: #fff;
+    padding: var(--spacing-large);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--color-sombra);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: var(--spacing-large); /* Espaciado inferior para evitar que el footer se superponga */
+}
+
+footer {
+    background-color: #f4f4f4; /* Color de fondo del footer */
+    text-align: center; /* Centrar el texto */
+    padding: 10px; /* Espaciado interno */
+    width: 100%; /* Ocupa todo el ancho */
+}
+
+.footer-content p {
+    margin: 5px 0; /* Espaciado entre líneas */
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    color: #555; /* Color del texto */
+}

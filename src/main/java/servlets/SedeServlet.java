@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/sedes")
+@WebServlet("/insertar-sedes")
 public class SedeServlet extends HttpServlet {
     private SedesDao sedesDao;
 
@@ -23,55 +22,31 @@ public class SedeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("list")) {
-            // Lógica para listar todas las sedes
-            List<Sedes> sedeList = sedesDao.readAll();
-            request.setAttribute("sedeList", sedeList);
-            request.getRequestDispatcher("sedes.jsp").forward(request, response);
-        } else if (action != null && action.equals("view")) {
-            // Ver una sede específica
-            int id = Integer.parseInt(request.getParameter("id"));
-            Sedes sede = sedesDao.read(id);
-            request.setAttribute("sede", sede);
-            request.getRequestDispatcher("viewSede.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/WEB-INF/views/insertarSedes.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
+        // Crear una nueva sede
+        Sedes nuevaSede = new Sedes(
+                0, // Asignar un id predeterminado ya que es AUTO_INCREMENT
+                request.getParameter("nombre_sede"),
+                request.getParameter("correo"),
+                request.getParameter("direccion")
+        );
 
-        if (action != null && action.equals("create")) {
-            // Crear una nueva sede
-            Sedes nuevaSede = new Sedes(
-                    0, // Asignar un id predeterminado ya que es AUTO_INCREMENT
-                    request.getParameter("nombreSede"),
-                    request.getParameter("correo"),
-                    request.getParameter("direccion")
-            );
+        System.out.println("1111");
 
+
+        try {
             sedesDao.create(nuevaSede);
-            response.sendRedirect("sedes?action=list");
-
-        } else if (action != null && action.equals("update")) {
-            // Actualizar una sede existente
-            Sedes sedeActualizada = new Sedes(
-                    Integer.parseInt(request.getParameter("id")),
-                    request.getParameter("nombreSede"),
-                    request.getParameter("correo"),
-                    request.getParameter("direccion")
-            );
-
-            sedesDao.update(sedeActualizada);
-            response.sendRedirect("sedes?action=list");
-
-        } else if (action != null && action.equals("delete")) {
-            // Eliminar una sede
-            int id = Integer.parseInt(request.getParameter("id"));
-            sedesDao.delete(id);
-            response.sendRedirect("sedes?action=list");
+            request.setAttribute("mensaje", "Sede creada correctamente");
+        } catch (Exception e) {
+            request.setAttribute("mensaje", "Error al crear la sede");
         }
+
+        System.out.println("Sede creada correctamente");
+
+        request.getRequestDispatcher("/WEB-INF/views/insertarSedes.jsp").forward(request, response);
     }
 }

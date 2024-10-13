@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/registroUsuario")
+@WebServlet("/registro")
 public class RegistroUsuarioServlet extends HttpServlet {
     private UsuarioDao usuarioDao;
 

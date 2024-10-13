@@ -24,20 +24,10 @@ public class AdmSedesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("list")) {
-            // Listar todas las asignaciones de administradores a sedes
-            List<AdmSedes> admSedesList = admSedesDao.readAll();
-            request.setAttribute("admSedesList", admSedesList);
-            request.getRequestDispatcher("admSedes.jsp").forward(request, response);
-        } else if (action != null && action.equals("view")) {
-            // Ver una asignación específica
-            int id = Integer.parseInt(request.getParameter("id"));
-            AdmSedes admSede = admSedesDao.read(id);
-            request.setAttribute("admSede", admSede);
-            request.getRequestDispatcher("viewAdmSede.jsp").forward(request, response);
-        }
+        // Listar todas las asignaciones de administradores a sedes
+        List<AdmSedes> admSedesList = admSedesDao.readAll();
+        request.setAttribute("admSedesList", admSedesList);
+        request.getRequestDispatcher("/WEB-INF/views/mostrarAdmSedes.jsp").forward(request, response);
     }
 
     @Override

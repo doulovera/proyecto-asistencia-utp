@@ -14,41 +14,66 @@ public class DatosDaoImpl implements DatosDao {
     }
 
     @Override
-public void create(Datos datos) {
-    String sql = "INSERT INTO Datos (ID, DNI, Correo_Electronico, Fecha_Nacimiento, Ruta_Foto, Ruta_Documentos) VALUES (?, ?, ?, ?, ?, ?)";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-        stmt.setInt(1, datos.getId());
-        stmt.setString(2, datos.getDni());
-        stmt.setString(3, datos.getCorreoElectronico());
-        stmt.setDate(4, new java.sql.Date(datos.getFechaNacimiento().getTime()));
-        stmt.setString(5, datos.getRutaFoto());
-        stmt.setString(6, datos.getRutaDocumentos());
-        stmt.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-
-// En el método read
-@Override
-public Datos read(int id) {
-    String sql = "SELECT * FROM Datos WHERE ID = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-        stmt.setInt(1, id);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return new Datos(rs.getInt("ID"),
-                             rs.getString("DNI"),
-                             rs.getString("Correo_Electronico"),
-                             rs.getDate("Fecha_Nacimiento"),
-                             rs.getString("Ruta_Foto"),
-                             rs.getString("Ruta_Documentos"));
+    public void create(Datos datos) {
+        String sql = "INSERT INTO Datos (ID, DNI, Correo_Electronico, Fecha_Nacimiento, Ruta_Foto, Ruta_Documentos) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, datos.getId());
+            stmt.setString(2, datos.getDni());
+            stmt.setString(3, datos.getCorreoElectronico());
+            stmt.setDate(4, new java.sql.Date(datos.getFechaNacimiento().getTime()));
+            stmt.setString(5, datos.getRutaFoto());
+            stmt.setString(6, datos.getRutaDocumentos());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-    return null;
-}
+
+    // En el método read
+    @Override
+    public Datos read(int id) {
+        String sql = "SELECT * FROM Datos WHERE ID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Datos(rs.getInt("ID"),
+                                 rs.getString("DNI"),
+                                 rs.getString("Correo_Electronico"),
+                                 rs.getDate("Fecha_Nacimiento"),
+                                 rs.getString("Ruta_Foto"),
+                                 rs.getString("Ruta_Documentos"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Datos readByIdentificador(Integer identificador) {
+        String sql = "SELECT u.ID, u.Nombres, u.Apellidos, d.DNI, d.Correo_Electronico, d.Fecha_Nacimiento, d.Ruta_Foto, d.Ruta_Documentos " +
+                "FROM Usuarios u " +
+                "LEFT JOIN Datos d ON u.ID = d.ID " +
+                "WHERE u.Identificador = " + identificador;
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Crear el objeto Datos con la información obtenida
+                return new Datos(
+                        rs.getInt("ID"),
+                        rs.getString("DNI"),
+                        rs.getString("Correo_Electronico"),
+                        rs.getDate("Fecha_Nacimiento"),
+                        rs.getString("Ruta_Foto"),
+                        rs.getString("Ruta_Documentos")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retornar null si no se encuentra el registro
+    }
 
     @Override
     public List<Datos> readAll() {
