@@ -100,6 +100,7 @@
         <li><a href="datos">Consultar datos de usuario</a></li>
         <li><a href="insertar-datos">Insertar datos de usuario</a></li>
         <li><a href="horarios">Registrar salida/entrada de usuarios</a></li>
+        <li><a href="graficos">Graficos</a></li>
         <li><a href="insertar-admsedes">Insertar administrador de la sede</a></li>
         <li><a href="insertar-sedes">Registrar Sede</a></li>
     </ul>
