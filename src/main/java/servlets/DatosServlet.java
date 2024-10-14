@@ -42,6 +42,10 @@ public class DatosServlet extends HttpServlet {
             request.setAttribute("mensaje", "El identificador debe ser un número.");
         }
 
+        if (datos == null) {
+            request.setAttribute("mensaje", "No se encontraron datos con el identificador proporcionado.");
+        }
+
         // Pasar la información a la vista
         request.setAttribute("datos", datos);
         request.getRequestDispatcher("/WEB-INF/views/consultarDatos.jsp").forward(request, response);

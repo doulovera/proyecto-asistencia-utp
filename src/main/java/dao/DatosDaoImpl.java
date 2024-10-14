@@ -15,9 +15,9 @@ public class DatosDaoImpl implements DatosDao {
 
     @Override
     public void create(Datos datos) {
-        String sql = "INSERT INTO Datos (ID, DNI, Correo_Electronico, Fecha_Nacimiento, Ruta_Foto, Ruta_Documentos) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Datos (Identificador, DNI, Correo_Electronico, Fecha_Nacimiento, Ruta_Foto, Ruta_Documentos) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, datos.getId());
+            stmt.setInt(1, datos.getIdentificador());  // Cambiado a 'Identificador'
             stmt.setString(2, datos.getDni());
             stmt.setString(3, datos.getCorreoElectronico());
             stmt.setDate(4, new java.sql.Date(datos.getFechaNacimiento().getTime()));
@@ -53,7 +53,7 @@ public class DatosDaoImpl implements DatosDao {
     public Datos readByIdentificador(Integer identificador) {
         String sql = "SELECT u.ID, u.Nombres, u.Apellidos, d.DNI, d.Correo_Electronico, d.Fecha_Nacimiento, d.Ruta_Foto, d.Ruta_Documentos " +
                 "FROM Usuarios u " +
-                "LEFT JOIN Datos d ON u.ID = d.ID " +
+                "LEFT JOIN Datos d ON u.Identificador = d.Identificador " +
                 "WHERE u.Identificador = " + identificador;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -104,7 +104,7 @@ public class DatosDaoImpl implements DatosDao {
             stmt.setDate(3, new java.sql.Date(datos.getFechaNacimiento().getTime()));
             stmt.setString(4, datos.getRutaFoto());
             stmt.setString(5, datos.getRutaDocumentos());
-            stmt.setInt(6, datos.getId());
+            stmt.setInt(6, datos.getIdentificador());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

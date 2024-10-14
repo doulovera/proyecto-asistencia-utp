@@ -4,9 +4,11 @@ D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\models\AdmSed
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\models\Datos.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\com\mycompany\proyecto\fin\resources\JakartaEE8Resource.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\DatosDao.java
+D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\InsertarDatosServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\models\Sedes.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\UsuarioDaoImpl.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\models\Usuarios.java
+D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\InsertarAdmSedesServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\DatosServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\ConsultaUsuarioServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\HorariosDaoImpl.java
@@ -19,7 +21,6 @@ D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\DatosDaoI
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\UsuarioDao.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\AdmSedesServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\RegistroUsuarioServlet.java
-D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\servlets\UsuarioServlet.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\SedesDaoImpl.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\dao\HorariosDao.java
 D:\Uni\DesarrolloWebIntegrado\ProyFinal\proyecto-fin\src\main\java\util\DBConnection.java

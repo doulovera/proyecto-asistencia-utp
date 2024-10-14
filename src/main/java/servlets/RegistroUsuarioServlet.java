@@ -39,6 +39,6 @@ public class RegistroUsuarioServlet extends HttpServlet {
         usuarioDao.create(nuevoUsuario);
 
         // Redirigir a la lista de usuarios o a otra página después de registrar
-        response.sendRedirect("usuarios?action=list");
+        response.sendRedirect("insertar-datos");
     }
 }

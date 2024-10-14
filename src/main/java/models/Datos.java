@@ -3,7 +3,7 @@ package models;
 import java.util.Date;
 
 public class Datos {
-    private int id; // ID del usuario
+    private int identificador; // ID del usuario
     private String dni; // DNI del usuario
     private String correoElectronico; // Correo electrónico del usuario
     private Date fechaNacimiento; // Fecha de nacimiento del usuario
@@ -14,8 +14,8 @@ public class Datos {
     public Datos() {}
 
     // Constructor completo
-    public Datos(int id, String dni, String correoElectronico, Date fechaNacimiento, String rutaFoto, String rutaDocumentos) {
-        this.id = id;
+    public Datos(int identificador, String dni, String correoElectronico, Date fechaNacimiento, String rutaFoto, String rutaDocumentos) {
+        this.identificador = identificador;
         this.dni = dni;
         this.correoElectronico = correoElectronico;
         this.fechaNacimiento = fechaNacimiento;
@@ -24,12 +24,12 @@ public class Datos {
     }
 
     // Getters y setters
-    public int getId() {
-        return id;
+    public int getIdentificador() {
+        return identificador;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdentificador(int identificador) {
+        this.identificador = identificador;
     }
 
     public String getDni() {
