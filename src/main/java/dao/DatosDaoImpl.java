@@ -51,11 +51,9 @@ public class DatosDaoImpl implements DatosDao {
     }
 
     public Datos readByIdentificador(Integer identificador) {
-        String sql = "SELECT u.ID, u.Nombres, u.Apellidos, d.DNI, d.Correo_Electronico, d.Fecha_Nacimiento, d.Ruta_Foto, d.Ruta_Documentos " +
-                "FROM Usuarios u " +
-                "LEFT JOIN Datos d ON u.Identificador = d.Identificador " +
-                "WHERE u.Identificador = " + identificador;
+        String sql = "{call GetUsuarioDatosPorIdentificador(?)}";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, identificador);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

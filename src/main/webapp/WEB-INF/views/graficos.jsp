@@ -33,10 +33,12 @@
         <canvas id="trab_sede"></canvas>
     </div>
 
+    <!--
     <div class="card">
         <h3>Otro graf</h3>
         <canvas id="otro_graf"></canvas>
     </div>
+    -->
 
     <script>
         let sedes = []
@@ -44,6 +46,15 @@
         <c:forEach items="${sedes}" var="sede">
             sedes.push("${sede.nombreSede}")
         </c:forEach>
+
+        let colors = [
+            "rgba(52, 140, 158, 0.8)",
+            "rgba(0, 123, 255, 0.8)",
+            "rgba(0, 86, 179, 0.8)",
+            "rgba(0, 123, 255, 0.8)",
+            "rgba(52, 140, 158, 0.8)",
+            "rgba(0, 86, 179, 0.8)",
+        ]
 
         var ctx = document.getElementById("trab_sede").getContext("2d");
         var myChart = new Chart(ctx, {
@@ -53,11 +64,21 @@
                 datasets: [
                     {
                         label: "Trabajadores por sede",
-                        data: [2, 9, 3],
-                        backgroundColor: "rgba(52, 140, 158)",
+                        data: sedes.map((sede, index) => (index + 1) * 2),
+                        backgroundColor: sedes.map((sede, index) => colors[index]),
+                        borderColor: [
+                            "rgba(255, 255, 255, 1)",
+                        ],
+                        borderWidth: 1
+
                     },
                 ],
             },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+
         });
     </script>
 
